@@ -1,15 +1,22 @@
 import express from "express";
 import cors from "cors";
-import records from "./routes/record.js";
-const PORT = process.env.PORT || 5050;
+import quiz from "./routes/quiz.js";
+import auth from "./routes/auth.js";
+import dotenv from "dotenv";
+import "./db/connection.js";
+dotenv.config()
+
+
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 
-// routes
-app.use("/record", records);
+// routes 
+app.use("/quiz", quiz);
+app.use("/auth", auth);
 
 // start the Express server
 app.listen(PORT, () => {
