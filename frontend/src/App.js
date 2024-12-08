@@ -6,9 +6,12 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import QuizList from "./pages/QuizList";
+import Profile from "./pages/Profile";
 import CreateQuiz from "./components/CreateQuiz";
 import EditQuiz from "./components/EditQuiz";
 import RequireAuth from "./components/RequireAuth";
+import './utils/AxiosInterceptor'
+import QuizDetail from "./pages/QuizDetail";
 
 function App() {
   return (
@@ -23,6 +26,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/quiz" element={<QuizList />} />
             <Route
               path="/quiz/create"
@@ -38,6 +42,7 @@ function App() {
                   <EditQuiz />
                 </RequireAuth>
               } />
+            <Route path="/quiz/:id" element={<QuizDetail />} />
           </Routes>
         </main>
 

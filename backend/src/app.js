@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import quiz from "./routes/quiz.js";
 import auth from "./routes/auth.js";
+import user from "./routes/user.js";
 import "./db/connection.js";
 import dotenv from "dotenv";
 dotenv.config()
@@ -17,6 +18,7 @@ app.use(express.json());
 // routes 
 app.use("/quiz", quiz);
 app.use("/auth", auth);
+app.use("/user", user);
 
 // start the Express server
 app.listen(PORT, () => {

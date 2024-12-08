@@ -9,20 +9,13 @@ function Navbar() {
     const navigate = useNavigate();
     const token = localStorage.getItem("authToken");
 
-
-    const handleLogout = () => {
-        localStorage.removeItem("authToken");
-        navigate("/");
-    };
-
-
     const { theme, setTheme } = useTheme();
 
     const toggleTheme = () => {
         if (theme == 'dark') {
             setTheme('light');
         } else {
-            setTheme('dark')
+            setTheme('dark');
         }
     }
 
@@ -61,9 +54,21 @@ function Navbar() {
                                 </li>
                             </>
                         ) : (
-                            <li>
-                                <LogoutButton className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" />
-                            </li>
+                            <>
+                                {/* Profile link */}
+                                <li>
+                                    <NavLink
+                                        to="/profile"
+                                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                                    >
+                                        Profile
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <LogoutButton className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" />
+                                </li>
+                            </>
+
                         )}
                         <li>
                             <button

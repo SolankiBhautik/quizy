@@ -1,4 +1,5 @@
 import Quiz from "../models/Quiz.js";
+import Question from "../models/Question.js"
 
 // Get all quizzes
 export const getQuizzes = async (req, res) => {
@@ -13,7 +14,7 @@ export const getQuizzes = async (req, res) => {
 // Get a single quiz by ID
 export const getQuizById = async (req, res) => {
     try {
-        const quiz = await Quiz.findById(req.params.id);
+        const quiz = await Quiz.findById(req.params.id).populate('questions');
         if (!quiz) return res.status(404).json({ message: "Quiz not found" });
         res.status(200).json(quiz);
     } catch (err) {
@@ -21,20 +22,45 @@ export const getQuizById = async (req, res) => {
     }
 };
 
-// Create a new quiz
 export const createQuiz = async (req, res) => {
     try {
+        const creator = req.user.id;
+        const { title, description, questions } = req.body;
+
+        // Create the quiz
         const quiz = new Quiz({
-            name: req.body.name,
-            position: req.body.position,
-            level: req.body.level,
+            title,
+            description,
+            creator,
         });
-        const newQuiz = await quiz.save();
-        res.status(201).json(newQuiz);
+
+        // Save the quiz first to get its ID
+        const savedQuiz = await quiz.save();
+
+        // Save each question with a reference to the quiz
+        const questionIds = [];
+        for (let question of questions) {
+            const newQuestion = new Question({
+                text: question.text,
+                options: question.options,
+                correctAnswer: question.correctAnswer,
+                quiz: savedQuiz.id,
+            });
+
+            const savedQuestion = await newQuestion.save();
+            questionIds.push(savedQuestion.id);
+        }
+
+        // Add the questions to the quiz
+        savedQuiz.questions = questionIds;
+        await savedQuiz.save();
+
+        res.status(201).json(savedQuiz);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
+
 
 // Update a quiz by ID
 export const updateQuiz = async (req, res) => {
