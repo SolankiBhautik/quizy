@@ -1,9 +1,21 @@
 import React from "react";
 import { NavLink } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../utils/ThemeContext";
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
+import LogoutButton from './LogoutButton';
 
 function Navbar() {
+    const navigate = useNavigate();
+    const token = localStorage.getItem("authToken");
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("authToken");
+        navigate("/");
+    };
+
+
     const { theme, setTheme } = useTheme();
 
     const toggleTheme = () => {
@@ -27,14 +39,32 @@ function Navbar() {
                             <NavLink to="/" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Home</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/quizzes" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Quizzes</NavLink>
+                            <NavLink to="/quiz" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Quizzes</NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/login" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Login</NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/register" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200">Register</NavLink>
-                        </li>
+                        {!token ? (
+                            <>
+                                <li>
+                                    <NavLink
+                                        to="/login"
+                                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                                    >
+                                        Login
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink
+                                        to="/register"
+                                        className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                                    >
+                                        Register
+                                    </NavLink>
+                                </li>
+                            </>
+                        ) : (
+                            <li>
+                                <LogoutButton className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200" />
+                            </li>
+                        )}
                         <li>
                             <button
                                 onClick={toggleTheme}

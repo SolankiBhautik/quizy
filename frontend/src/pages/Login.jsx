@@ -60,6 +60,10 @@ function Login() {
                 username,
                 password,
             });
+
+            const token = response.data.token;
+            localStorage.setItem("authToken", token);
+
             navigate("/");
         } catch (err) {
             if (err.response && err.response.data.message) {

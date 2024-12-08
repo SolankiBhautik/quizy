@@ -20,7 +20,7 @@ const quizSchema = new mongoose.Schema(
     }
 );
 
-const Quiz = mongoose.model("Quiz", quizSchema); // This will use the "quizzes" collection
+const Quiz = mongoose.model("Quiz", quizSchema);
 
 
 export default Quiz;

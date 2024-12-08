@@ -2,8 +2,8 @@ import express from "express";
 import cors from "cors";
 import quiz from "./routes/quiz.js";
 import auth from "./routes/auth.js";
-import dotenv from "dotenv";
 import "./db/connection.js";
+import dotenv from "dotenv";
 dotenv.config()
 
 

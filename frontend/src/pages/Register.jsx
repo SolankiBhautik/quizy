@@ -71,8 +71,6 @@ function Register() {
 
     const handleRegister = async (e) => {
         e.preventDefault();
-
-        // Check for validity before submitting
         if (!isFormValid) return;
 
         try {
@@ -80,11 +78,14 @@ function Register() {
                 username,
                 password,
             });
+            const token = response.data.token;
+            localStorage.setItem("authToken", token);
+
             setMainError(null);
             navigate('/');
         } catch (err) {
             if (err.response && err.response.message) {
-                setMainError(err.response.message); // Set main error message
+                setMainError(err.response.message);
             } else {
                 console.error("Registration failed:", err);
                 setMainError("Something went wrong. Please try again.");

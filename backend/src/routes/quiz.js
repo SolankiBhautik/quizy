@@ -1,5 +1,7 @@
 import express from "express";
 import { getQuizzes, getQuizById, createQuiz, updateQuiz, deleteQuiz } from "../controllers/quizController.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
+
 
 const router = express.Router();
 
@@ -10,12 +12,12 @@ router.get("/", getQuizzes);
 router.get("/:id", getQuizById);
 
 // Create a new quiz
-router.post("/", createQuiz);
+router.post("/", authenticateToken, createQuiz);
 
 // Update a quiz by ID
-router.patch("/:id", updateQuiz);
+router.patch("/:id", authenticateToken, updateQuiz);
 
 // Delete a quiz by ID
-router.delete("/:id", deleteQuiz);
+router.delete("/:id", authenticateToken, deleteQuiz);
 
 export default router;

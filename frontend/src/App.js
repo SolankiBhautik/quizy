@@ -6,6 +6,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import QuizList from "./pages/QuizList";
+import CreateQuiz from "./components/CreateQuiz";
+import EditQuiz from "./components/EditQuiz";
+import RequireAuth from "./components/RequireAuth";
 
 function App() {
   return (
@@ -20,7 +23,21 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/quizzes" element={<QuizList />} />
+            <Route path="/quiz" element={<QuizList />} />
+            <Route
+              path="/quiz/create"
+              element={
+                <RequireAuth>
+                  <CreateQuiz />
+                </RequireAuth>
+              } />
+            <Route
+              path="/quiz/edit/:i"
+              element={
+                <RequireAuth>
+                  <EditQuiz />
+                </RequireAuth>
+              } />
           </Routes>
         </main>
 
