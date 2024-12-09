@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 import { Link, useNavigate } from "react-router";
-import axios from "axios";
+import axios from "../utils/AxiosInterceptor";
 
 function Register() {
     const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;

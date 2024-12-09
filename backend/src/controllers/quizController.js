@@ -25,13 +25,14 @@ export const getQuizById = async (req, res) => {
 export const createQuiz = async (req, res) => {
     try {
         const creator = req.user.id;
-        const { title, description, questions } = req.body;
+        const { title, description, questions, time } = req.body;
 
         // Create the quiz
         const quiz = new Quiz({
             title,
             description,
             creator,
+            time
         });
 
         // Save the quiz first to get its ID

@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import './utils.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from './utils/ThemeContext';
+import axios from './utils/AxiosInterceptor'
+
+axios.get('/auth/check')
+  .then((res) => {
+    console.log('user authorized')
+  })
+  .catch((err) => {
+    console.error(err)
+  })
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

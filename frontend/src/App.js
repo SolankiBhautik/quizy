@@ -10,8 +10,8 @@ import Profile from "./pages/Profile";
 import CreateQuiz from "./components/CreateQuiz";
 import EditQuiz from "./components/EditQuiz";
 import RequireAuth from "./components/RequireAuth";
-import './utils/AxiosInterceptor'
 import QuizDetail from "./pages/QuizDetail";
+import Result from "./pages/Result";
 
 function App() {
   return (
@@ -43,6 +43,7 @@ function App() {
                 </RequireAuth>
               } />
             <Route path="/quiz/:id" element={<QuizDetail />} />
+            <Route path="/quiz/:id/result" element={<Result />} />
           </Routes>
         </main>
 

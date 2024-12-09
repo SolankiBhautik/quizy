@@ -10,7 +10,6 @@ function CreateQuiz() {
         { text: "", options: ["", "", "", ""], correctAnswer: 0 },
     ]);
     const navigate = useNavigate();
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
     // Add a new question
     const addQuestion = () => {
@@ -36,8 +35,8 @@ function CreateQuiz() {
         e.preventDefault();
 
         try {
-            const newQuiz = { title, description, questions };
-            await axios.post(`${BACKEND_URL}/quiz`, newQuiz);
+            const newQuiz = { title, description, questions, time };
+            await axios.post(`/quiz`, newQuiz);
             navigate("/quiz");
         } catch (error) {
             console.error("Error creating quiz:", error.response.data.message);

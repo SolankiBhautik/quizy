@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/AxiosInterceptor";
 
 function Login() {
     const navigate = useNavigate();
@@ -63,7 +63,6 @@ function Login() {
 
             const token = response.data.token;
             localStorage.setItem("authToken", token);
-
             navigate("/");
         } catch (err) {
             if (err.response && err.response.data.message) {

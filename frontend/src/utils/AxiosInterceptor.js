@@ -5,6 +5,9 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const instance = axios.create({
     baseURL: BACKEND_URL,
+    headers: {
+        Accept: "application/json",
+    },
 });
 
 
@@ -30,7 +33,6 @@ instance.interceptors.response.use(
             // Token expired or unauthorized, log out the user
             localStorage.removeItem("authToken");
             localStorage.removeItem("user");
-            window.location.href = "/login";  //
         }
         return Promise.reject(error);
     }

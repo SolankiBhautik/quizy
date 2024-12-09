@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/AxiosInterceptor";
 import { Link } from "react-router-dom";
 import QuizCard from "./QuizCard";
 
 function QuizList() {
     const [quizzes, setQuizzes] = useState([]);
-    const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
     useEffect(() => {
         fetchQuizzes();
@@ -13,7 +12,7 @@ function QuizList() {
 
     const fetchQuizzes = async () => {
         try {
-            const response = await axios.get(`${BACKEND_URL}/quiz`);
+            const response = await axios.get(`/quiz`);
             setQuizzes(response.data);
         } catch (error) {
             console.error("Error fetching quizzes:", error);

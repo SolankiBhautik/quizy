@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "../utils/AxiosInterceptor";
 
 function Profile() {
     const [user, setUser] = useState(null);

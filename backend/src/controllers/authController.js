@@ -19,12 +19,7 @@ export const register = async (req, res) => {
 
         const newUser = await user.save();
 
-        const token = jwt.sign(
-            { id: user._id, username: user.username },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
-
+        const token = makeToken(user);
 
         res.status(200).json({ token, message: "Register successful!", user: newUser });
     } catch (err) {
@@ -47,16 +42,28 @@ export const login = async (req, res) => {
             return
         }
 
-        const token = jwt.sign(
-            { id: user._id, username: user.username },
-            process.env.JWT_SECRET,
-            { expiresIn: "1h" }
-        );
-
+        const token = makeToken(user);
 
         res.status(200).json({ token, message: "Login successful!", user: user });
     } catch (err) {
         res.status(500).json({ message: "error testing" })
+    }
+}
+
+
+export const check = async (req, res) => {
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+    if (!token) {
+        return res.status(401).json({ message: "Authentication token required" });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // Attach user data to the request for further use
+        const userid = { id: decoded.id };
+        res.status(200).json({ userid: userid })
+    } catch (err) {
+        res.status(500).json({ message: "error checking token" })
     }
 }
 
@@ -76,4 +83,16 @@ async function hashPassword(password) {
 async function comparePasswords(enteredPassword, storedHash) {
     const match = await bcrypt.compare(enteredPassword, storedHash);
     return match;
+}
+
+
+function makeToken(user) {
+    const token = jwt.sign(
+        { id: user._id, username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+    );
+
+    return token;
+
 }
